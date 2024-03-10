@@ -1,0 +1,36 @@
+﻿@model Position
+<div class="row">
+    <div class="col-9">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Create Position</h5>
+
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="PositionName" class="form-label"></label>
+                        <input asp-for="PositionName" class="form-control" />
+                        <span asp-validation-for="PositionName" class="text-danger"></span>
+                    </div>
+                 
+
+                 
+                    @* CategoryCombobox *@
+
+                   
+
+                  
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button asp-action="Index" class="btn btn-danger">Go Back</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,28 @@
+﻿@model SendEmailVM 
+
+<section class="checkout pt_110 xs_pt_90 mt-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 wow fadeInLeft">
+                <div class="checkout_area">
+                    <h2>Billing Details</h2>
+                    <form method="post" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input asp-for="Name" type="text" placeholder="Fast Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Surname" type="text" placeholder="Last Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Email" type="email" placeholder="Your Email">
+                            </div>
+                           
+                        </div>
+                        <button type="submit" class="btn btn-primary">Checkout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

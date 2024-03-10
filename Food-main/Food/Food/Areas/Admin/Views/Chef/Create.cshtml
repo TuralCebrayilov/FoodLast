@@ -1,0 +1,51 @@
+﻿@model Chef
+<div class="row">
+    <div class="col-9">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Create Slider</h5>
+
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3 form-group">
+                        <label asp-for="Photo" class="form-label"></label>
+                        <input asp-for="Photo" accept="image/*" class="form-control" />
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                 
+                    @* CategoryCombobox *@
+
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">İxtisas</label>
+                        <select class="form-control" name="CatId">
+                            @foreach (Position cat in ViewBag.Positions)
+                            {
+                                <option value="@cat.Id">@cat.PositionName</option>
+                            }
+
+
+                        </select>
+                    </div>
+
+
+
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button asp-action="Index" asp-controller="Chef" class="btn btn-danger">Go Back</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

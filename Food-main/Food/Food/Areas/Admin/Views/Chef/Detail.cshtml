@@ -1,0 +1,59 @@
+﻿@model Chef;
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header" style="display:flex;justify-content:space-between">
+                <h3>
+                    Tələbələr
+                </h3>
+                <div>
+                    <a asp-action="Index" class="btn btn-danger text-white rounded-pill" style="margin-right:10px">Geri</a>
+
+                    <a class="btn btn-info text-white rounded-pill" style="margin-right:10px" asp-action="SendStudentSms">Email</a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+
+                            <th>Şəkil</th>
+                            <th>Ad</th>
+                            <th>Position</th>
+                            <th>Aktivdir?</th>
+                  
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>  <img src="~/assets/images/@Model.Images" alt="image" style="width:100px ;height:100px; border-radius:100px" /></td>
+                            <td>@Model.Name</td>
+                            <td>@Model.Position.PositionName</td>
+
+                       
+                            <td>
+                                @if (Model.IsDeactive)
+                                {
+                                    <span style="padding:1px 2px; background-color:red;color:white">Xeyr</span>
+                                }
+                                else
+                                {
+                                    <span style="padding:1px 2px; background-color:green;color:white">Bəli</span>
+                                }
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+

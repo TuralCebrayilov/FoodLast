@@ -1,0 +1,212 @@
+﻿@model HomeVM;
+<!--==========================
+    MENU STYLE 01 START
+===========================-->
+<section class="menu_item_3 mt_110 xs_mt_90 pb_25">
+    
+</section>
+
+<section class="popular_food pt_110 xs_pt_90 pb_90 mb_120 xs_mb_100">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-8 m-auto">
+                <div class="section_heading mb_40">
+                    <h2>Our Popular food item </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row popular_food_slider">
+            @foreach (MenuProduct pro in Model.MenuProducts)
+            {
+                <div class="col-xl-3 wow fadeInUp">
+                    <div class="popular_food_item">
+                        <span class="tags">New</span>
+                        <a href="#" class="img">
+                            <img src="assets/images/@pro.Image" alt="Food" class="img-fluid w-100">
+                        </a>
+                        <a class="title" asp-controller="Menu" asp-action="GetMenuByCategory">@pro.ProductName</a>
+                        <a class="see_btn" asp-controller="Menu" asp-action="GetMenuByCategory">See Menu <i class="far fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            }
+         
+           
+        </div>
+    </div>
+</section>
+
+<section class="menu_item_2 menu_item_4 mt pt_125 xs_pt_85 pb_140 xs_pb_100">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-8">
+                <div class="section_heading heading_left mb_25">
+                    <h2>Popular Menu items</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row menu_4_slider">
+            <div class="col-12">
+                <div class="row justify-content-between">
+                    @foreach (MenuProduct product in Model.MenuProducts)
+                    {
+                        <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                            <div class="single_menu_2">
+                                <div class="single_menu_2_img">
+                                    <img src="~/assets/images/@product.Image" alt="menu" class="img-fluid w-100">
+                                </div>
+                                <div class="single_menu_2_text">
+                                    <a class="title"><span>@product.ProductName</span></a>
+                                    <p>@product.ProductDescription</p>
+                                    <h3>$@product.ProductMPrice</h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                 @*    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>chicken Buffalo wing</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$30</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Chicken Strip Basket</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$45</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Double patty Hamburger</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$75</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Roast chicken</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$80</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Pasta Pappardelle</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$55</h3>
+                            </div>
+                        </div>
+                    </div> *@
+                   
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row justify-content-between">
+                   @*  <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Hamburger Veggie</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$60</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>chicken Buffalo wing</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$30</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Chicken Strip Basket</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$45</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Double patty Hamburger</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$75</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Roast chicken</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$80</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assets/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Pasta Pappardelle</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$55</h3>
+                            </div>
+                        </div>
+                    </div> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

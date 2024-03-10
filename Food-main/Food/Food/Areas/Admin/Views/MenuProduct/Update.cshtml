@@ -1,0 +1,83 @@
+﻿@model MenuProduct
+<div class="row">
+    <div class="col-9">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"></h5>
+
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3 form-group">
+                        <label asp-for="Photo" class="form-label">Şəkil</label>
+                        <input asp-for="Photo" accept="image/*" class="form-control" />
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductName" class="form-label">Ad</label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductDescription" class="form-label">Açığlama</label>
+                        <input  asp-for="ProductDescription" class="form-control" />
+                        <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                    </div>
+
+                   
+
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductLPrice" class="form-label">Böyük Qiymət</label>
+                        <input asp-for="ProductLPrice" class="form-control" />
+                        <span asp-validation-for="ProductLPrice" class="text-danger"></span>
+
+                    </div>
+                     <div class="mb-3 form-group">
+                        <label asp-for="ProductMPrice" class="form-label">Orta Qiymət</label>
+                        <input asp-for="ProductMPrice" class="form-control" />
+                        <span asp-validation-for="ProductMPrice" class="text-danger"></span>
+
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductSPrice" class="form-label">Kiçik Qiymət</label>
+                        <input asp-for="ProductSPrice" class="form-control" />
+                        <span asp-validation-for="ProductSPrice" class="text-danger"></span>
+
+                    </div>
+                  
+
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Kateqory</label>
+                        <select class="form-control" name="CatId">
+                            @foreach (MenuCategory cat in ViewBag.MenuCategories)
+                            {
+                                if (Model.MenuCategoryId == cat.Id)
+                                {
+                                    <option selected value="@cat.Id">@cat.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@cat.Id">@cat.Name</option>
+
+                                }
+                            }
+
+
+                        </select>
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-primary">Dəyiş</button>
+                    <a asp-action="Index" class="btn btn-danger">GERI</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

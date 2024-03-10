@@ -1,0 +1,97 @@
+﻿@model List<HomeSlider>
+
+<!-- Bordered Table -->
+<div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between">
+        <h3>
+            Sliders
+        </h3>
+        <div>
+            <a asp-action="Create" class="btn btn-danger text-white rounded-pill" style="margin-right:10px">Create</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Status</th>
+
+                        @*<th>Users</th>*@
+
+                        <th style="text-align:center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (HomeSlider item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/assets/images/@item.Image" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.Title</strong>
+                            </td>
+
+                            @* <td>
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                        <li data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        class="avatar avatar-xs pull-up"
+                        title="Lilian Fuller">
+                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                        </li>
+                        <li data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        class="avatar avatar-xs pull-up"
+                        title="Sophia Wilkerson">
+                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                        </li>
+                        <li data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        class="avatar avatar-xs pull-up"
+                        title="Christina Parker">
+                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                        </li>
+                        </ul>
+                        </td>*@
+                            <td>
+                                @if (item.IsDeactive)
+                                {
+                                    <span style="padding:4px 6px; background-color:forestgreen;color:white">DeActive</span>
+                                }
+                                else
+                                {
+                                    <span style="padding:4px 6px; background-color:red;color:white">Active</span>
+                                }
+                            </td>
+                            <td>
+                                <div style="display:flex;justify-content:flex-end">
+                                  
+                                    <a class="btn btn-info text-white rounded-pill" style="margin-right:10px" asp-action="Update" asp-route-id="@item.Id">Update</a>
+                                    @if (item.IsDeactive)
+                                    {
+                                        <a class="btn btn-success text-white rounded-pill" style="margin-right:10px;width:118px" asp-action="Activity" asp-route-id="@item.Id">Active</a>
+
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger text-white rounded-pill" style="margin-right:10px;width:118px" asp-action="Activity" asp-route-id="@item.Id">DeActive</a>
+
+                                    }
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--/ Bordered Table -->

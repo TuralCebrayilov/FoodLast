@@ -1,0 +1,219 @@
+﻿@model MenuCategoryVM
+ 
+
+<!--==========================
+    MENU STYLE 03 START
+===========================-->
+<section class="menu_grid_view mt_120 xs_mt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 order-2 wow fadeInLeft">
+                <div class="menu_sidebar sticky_sidebar">
+                    <div class="sidebar_wizard sidebar_search">
+                        <h2>Search</h2>
+                        <form>
+                            <input type="text" placeholder="Search here...">
+                            <button type="submit"><i class="far fa-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="sidebar_wizard sidebar_price_ranger mt_25">
+                        <h2>Pricing Filter</h2>
+                        <div class="price_ranger">
+                            <input type="hidden" id="slider_range" class="flat-slider" />
+                        </div>
+                    </div>
+                    <div class="sidebar_wizard sidebar_category mt_25">
+                        <h2>Categories</h2>
+                        <ul>
+                            @foreach (MenuCategory menuCategory in Model.MenuCategories)
+                            {
+                                <li><a asp-controller="Menu" asp-action="GetMenuByCategory" asp-route-id="@menuCategory.Id"> @menuCategory.Name </a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 order-lg-2">
+                <div class="row">
+                    <div class="col-xl-4 col-sm-6 wow fadeInUp">
+                        <div class="single_menu">
+                            @foreach (MenuProduct menuProduct in Model.MenuProducts)
+                            {
+                                <div class="single_menu_img">
+                                    <img src="~/assets/images/@menuProduct.Image" alt="menu" class="img-fluid w-100">
+                                    <ul>
+                                        <li><a href="#"><i class="far fa-eye"></i></a></li>
+                                        <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="single_menu_text">
+                                    <a class="category" href="#">@menuProduct.MenuCategory.Name</a>
+                                    <a class="title" href="menu_details.html">@menuProduct.ProductName</a>
+                                    <p class="descrption">@menuProduct.ProductDescription</p>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <a class="add_to_cart" data-bs-toggle="modal"
+                                           data-bs-target="#cartModal" onclick="showDetail(@menuProduct.Id)">Add To Cart</a>
+                                        <h3>@menuProduct.ProductMPrice</h3>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CART POPUT START -->
+<div class="cart_popup">
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fal fa-times"></i>
+                    </button>
+                    <div class="cart_popup_img">
+                        <img id="ProductImage" src="" alt="menu" class="img-fluid w-100">
+                    </div>
+                    <div class="cart_popup_text">
+                        <a id="ProductName" class="title">Name</a>
+
+                        <h4 class="price" id="ProductPrice"></h4>
+
+                        @* Price *@
+                        <div class="details_size">
+                            <h5>select size</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="large">
+                                <label class="form-check-label" for="large">
+                                    large <span class="selectedPrice" id="ProductLPrice">10</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="medium" checked>
+                                <label class="form-check-label" for="medium">
+                                    medium <span class="selectedPrice" id="ProductMPrice">20</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="small">
+                                <label class="form-check-label" for="small">
+                                    small <span class="selectedPrice" id="ProductSPrice">30</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="details_quentity">
+                            <h5>select quentity</h5>
+                            <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
+                                <div class="quentity_btn">
+                                    <button class="btn btn-danger decrement"><i class="fal fa-minus"></i></button>
+                                    <input class="num" type="text" placeholder="1">
+                                  
+                                    <button class="btn btn-success incremenet"><i class="fal fa-plus"></i></button>
+                                </div>
+                                <h3 id="totalPrice"> $ 0 </h3>
+                            </div>
+                        </div>
+                        <ul class="details_button_area d-flex flex-wrap">
+                            <li>
+                                <a class="common_btn" href="#">
+                                    <span class="icon"><img src="~/assets/images/cart_icon_1.png" alt=""></span>
+                                    add to cart
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CART POPUT END -->
+<!--==========================
+    MENU STYLE 03 END
+===========================-->
+
+<script>
+    const plus = document.querySelector(".incremenet");
+    const minus = document.querySelector(".decrement");
+    const num = document.querySelector(".num");
+
+    const totalPrice = document.querySelector(".totalPrice");
+    let result = 0;
+    let selectedPrice = 0;
+    let selectedDrink = 0;
+    let count = 1;
+    const radioInputs = document.querySelectorAll('input[type="radio"][name="flexRadioDefault"]');
+
+    radioInputs.forEach(input => {
+        input.addEventListener('change', function () {
+
+            selectedPrice = selectedPrice = document.getElementById("ProductMPrice").innerText;
+
+            if (document.getElementById("large").checked) {
+                selectedPrice = document.getElementById("ProductLPrice").innerText;
+            }
+            else if (document.getElementById("medium").checked) {
+                selectedPrice = document.getElementById("ProductMPrice").innerText;
+            }
+            else if (document.getElementById("small").checked) {
+                selectedPrice = document.getElementById("ProductSPrice").innerText;
+            }
+
+            selectedPrice = selectedPrice.substring(4);
+            result = Number(selectedPrice) * Number(count);
+
+            console.log(result);
+            $('#totalPrice').text('$ ' + result);
+        });
+    });
+
+    let prices = 0;
+    let a = 1;
+
+    plus.addEventListener("click", () => {
+        a++;
+        a = (a < 10) ? "0" + a : a;
+        num.value = a;
+        count = a;
+        result = Number(selectedPrice) * Number(count);
+        $('#totalPrice').text('$ ' + result);
+    });
+
+    minus.addEventListener("click", () => {
+        if (a > 1) {
+            a--;
+            a = (a < 10) ? "0" + a : a;
+            num.value = a;
+            count = a;
+            result = Number(selectedPrice) * Number(count);
+            $('#totalPrice').text('$ ' + result);
+        }
+    });
+
+    function showDetail(cartId) {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/Detail',
+            data: { id: cartId },
+            success: function (data) {
+                console.log(data);
+                $('#ProductName').text(data.productName);
+                $('#ProductPrice').text('$ ' + data.productMPrice);
+                $('#ProductMPrice').text('+ $ ' + data.productMPrice);
+                $('#ProductSPrice').text('+ $ ' + data.productSPrice);
+                $('#ProductLPrice').text('+ $ ' + data.productLPrice);
+                $('#totalPrice').text('$ ' + data.productMPrice);
+                const productImage = '/assets/images/' + data.image;
+                document.getElementById("ProductImage").src = productImage;
+            },
+            error: function () {
+                alert('Məlumatlar əldə edilə bilmədi.');
+            }
+        });
+    }
+
+</script>

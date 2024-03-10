@@ -1,0 +1,72 @@
+﻿@model MenuProduct
+<div class="row">
+    <div class="col-9">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Create Slider</h5>
+
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3 form-group">
+                        <label asp-for="Photo" class="form-label"></label>
+                        <input asp-for="Photo" accept="image/*" class="form-control" />
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductName" class="form-label"></label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductDescription" class="form-label"></label>
+                        <textarea asp-for="ProductDescription" class="form-control"></textarea>
+                        <span asp-validation-for="ProductDescription" class="text-danger">   </span>
+                    </div>
+
+                    @* CategoryCombobox *@
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductLPrice" class="form-label"></label>
+                        <textarea asp-for="ProductLPrice" class="form-control"></textarea>
+                        <span asp-validation-for="ProductLPrice" class="text-danger">   </span>
+                    </div>
+
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductSPrice" class="form-label"></label>
+                        <textarea asp-for="ProductSPrice" class="form-control"></textarea>
+                        <span asp-validation-for="ProductSPrice" class="text-danger">   </span>
+                    </div>
+
+
+                    <div class="mb-3 form-group">
+                        <label asp-for="ProductMPrice" class="form-label"></label>
+                        <textarea asp-for="ProductMPrice" class="form-control"></textarea>
+                        <span asp-validation-for="ProductMPrice" class="text-danger">   </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">İxtisas</label>
+                        <select class="form-control" name="CatId">
+                            @foreach (MenuCategory cat in ViewBag.MenuCategories)
+                            {
+                                <option value="@cat.Id">@cat.Name</option>
+                            }
+
+
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button asp-action="Index" asp-controller="MenuProduct" class="btn btn-danger">Go Back</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

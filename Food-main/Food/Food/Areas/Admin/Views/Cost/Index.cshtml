@@ -1,0 +1,41 @@
+﻿@model List<Cost>
+<hr class="my-5" />
+
+<!-- Bordered Table -->
+<div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between">
+        <h5>
+            Xərclər
+        </h5>
+        <div>
+            <a asp-action="Create" class="btn btn-danger text-white rounded-pill" style="margin-right:10px">Əlavə Et</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table id="myCost" class="table table-bordered">
+               <thead>
+                    <tr>
+                        <th>Miqdar</th>
+                        <th>Məlumat</th>
+                        <th>Tarix</th>
+                        <th>Kim tərəfdən</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Cost item in Model)
+                    {
+                        <tr>
+                            <td>- @item.Amount AZN</td>
+                            <td>@item.Description</td>
+                            <td>@item.CreateTime</td>
+                            <td>@item.By</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

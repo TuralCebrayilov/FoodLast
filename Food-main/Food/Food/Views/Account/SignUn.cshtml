@@ -1,0 +1,62 @@
+﻿@model SignUpVM;
+
+
+
+<section class="sign_up sign_in">
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-6 wow fadeInLeft">
+            <div class="sign_in_img">
+                <img src="~/assets/images/sign_in_img_2.jpg" alt="sign in" class="img-fluid w-100">
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-10 col-lg-6 wow fadeInRight">
+            <div class="sign_in_form">
+                <a class="sign_in_logo" href="index.html">
+                    <img src="~/assets/images/logo.png" alt="sign in" class="img-fluid w-100">
+                </a>
+                <h2>Create Account</h2>
+                <div asp-validation-summary="ModelOnly" style="color:red;margin-left:15px">
+                </div>
+                <p class="description">Please Enter your Email Address to Start your Online Application</p>
+                <form  method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input asp-for="@Model.Name" placeholder="Fast Name">
+                            <span asp-validation-for="Name" style="color:red;margin-left:15px"></span>
+
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.SurName" placeholder="Last Name">
+                            <span asp-validation-for="SurName" style="color:red;margin-left:15px"></span>
+
+                        </div>
+                        <div class="col-xl-12">
+                            <input asp-for="@Model.Email" placeholder="Email...">
+                            <span asp-validation-for="Email" style="color:red;margin-left:15px"></span>
+
+                        </div>
+                        <div class="col-xl-12">
+                            <input asp-for="@Model.Username" placeholder="Role...">
+                            <span asp-validation-for="Username" style="color:red;margin-left:15px"></span>
+
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.Password" placeholder="Password...">
+                            <span asp-validation-for="Password" style="color:red;margin-left:15px"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.CheckPassword" placeholder="Confirm Password...">
+                        </div>
+                        <div class="col-12">
+                            <button class="common_btn" type="submit">sign up</button>
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

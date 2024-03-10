@@ -1,0 +1,118 @@
+﻿@model List<About>
+
+<!-- Bordered Table -->
+<div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between">
+        <h3>
+            About
+        </h3>
+        <div>
+            <a asp-action="Create" class="btn btn-danger text-white rounded-pill" style="margin-right:10px">Create</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th style="text-align:center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (About item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/assets/images/@item.Image" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.Title</strong>
+                            </td>
+                            <td>
+                                <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.Description</strong>
+                            </td>
+                           
+                           
+                            <td>
+                                <div style="display:flex;justify-content:flex-end">
+                                 
+                                    <a class="btn btn-info text-white rounded-pill" style="margin-right:10px" asp-action="Update" asp-route-id="@item.Id">Update</a>
+                                  
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between">
+        <h3>
+           Photo
+        </h3>
+        
+    </div>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image2</th>
+                        <th>Image3</th>
+                        <th>Image4</th>
+                        <th>Image5</th>
+                        <th>Image6</th>
+                        <th>Image7</th>
+                        <th>Image8</th>
+                        <th style="text-align:center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (About item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/assets/images/@item.Image2" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <img src="~/assets/images/@item.Image3" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <img src="~/assets/images/@item.Image4" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <img src="~/assets/images/@item.Image5" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <img src="~/assets/images/@item.Image6" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <img src="~/assets/images/@item.Image7" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+                            <td>
+                                <img src="~/assets/images/@item.Image8" style="width:200px; height:100px;object-fit:cover" />
+                            </td>
+
+
+
+                            <td>
+                                <div style="display:flex;justify-content:flex-end">
+
+                                    <a class="btn btn-info text-white rounded-pill" style="margin-right:10px" asp-action="Update1" asp-route-id="@item.Id">Update1</a>
+
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--/ Bordered Table -->

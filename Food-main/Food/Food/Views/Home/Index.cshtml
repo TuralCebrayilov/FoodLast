@@ -1,0 +1,574 @@
+﻿@model HomeVM
+
+<!--==========================
+    MENU END
+===========================-->
+<!--==========================
+    BANNER START
+===========================-->
+<section class="banner" style="background: url(../assets/images/banner_bg.jpg);">
+    <div class="container container_large">
+        @foreach (HomeSlider homeSlider in Model.HomeSlider)
+        {
+            <div class="row justify-content-between align-items-center">
+                <div class="col-xxl-6 col-lg-6 col-xl-6 col-md-9">
+                    <div class="banner_text wow fadeInUp">
+
+                        <h1> @homeSlider.Title</h1>
+                        <p>
+                            @homeSlider.SubTitle
+                        </p>
+                       
+                    </div>
+                </div>
+                <div class="col-xxl-5 col-lg-6 col-xl-6">
+                    <div class="banner_img wow fadeInRight">
+                        <div class="img">
+                            <img src="~/assets/images/@homeSlider.Image" alt="banner" class="img-fluid w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+       
+    </div>
+</section>
+<!--==========================
+    BANNER END
+===========================-->
+<!--==========================
+    CATEGORY START
+===========================-->
+<section class="category pt_130 xs_pt_90">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 wow fadeInUp">
+                <div class="section_heading heading_left mb_50">
+                    <h2> Our Popular category</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row category_slider">
+            @foreach (MenuCategory menuCategory in Model.MenuCategories)
+            {
+                <div class="col-xl-3 wow fadeInUp">
+                    <a asp-controller="Menu" asp-action="GetMenuByCategory" asp-route-id="@menuCategory.Id" class="category_item">
+                        <img src="~/assets/images/@menuCategory.Image" alt="category" class="img-fluid w-100">
+                        <h3>@menuCategory.Name</h3>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--==========================
+    CATEGORY END
+===========================-->
+
+<!--==========================
+    MENU ITEM START
+===========================-->
+<section class="menu_item pt_125 xs_pt_85">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 m-auto wow fadeInUp">
+                <div class="section_heading mb_45 xs_mb_50">
+                    <h2>Delicious Menu</h2>
+                </div>
+            </div>
+        </div>
+        <div id="schedule">
+            <div class="colorful-tab-wrapper">
+                <div class="row mb_15 wow fadeInUp" id="filter_area">
+                    <div class="col-xxl-8 col-lg-9 m-auto">
+                        <ul class="filter_btn_area">
+                             @foreach (MenuCategory menuCategory in Model.MenuCategories)
+            {
+                                <li><a onclick="changeMenu(@menuCategory.Id)">@menuCategory.Name</a></li>
+            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" id="ProductByCategory">
+                        <div class="colorful-tab-content active">
+                            <div class="row">
+                                @foreach (MenuProduct menuProduct in Model.MenuProducts)
+                                {
+                                    <div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">
+                                        <div class="single_menu">
+                                            <div class="single_menu_img">
+                                                <img src="~/assets/images/@menuProduct.Image" alt="menu"
+                                                     class="img-fluid w-100">
+                                                <ul>
+                                                    <li><a href="#"><i class="far fa-eye"></i></a></li>
+                                                    <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="single_menu_text">
+
+                                                <a class="category" href="#">@menuProduct.MenuCategory.Name</a>
+                                                <a class="title" href="menu_details.html">@menuProduct.ProductName</a>
+                                                <p class="descrption">@menuProduct.ProductDescription</p>
+                                                <div class="d-flex flex-wrap align-items-center">
+                                                    <a class="add_to_cart"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#cartModal"
+                                                       onclick="showDetail(@menuProduct.Id)">Add To Cart</a>
+                                                    <h3>$ @menuProduct.ProductMPrice</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt_60">
+                        <a class="common_btn" asp-controller="MenuController" asp-action="Index">
+                            <span class="icon">
+                                <img src="~/assets/images/eye.png" alt="order" class="img-fluid w-100">
+                            </span>
+                            View All Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CART POPUT START -->
+<div class="cart_popup">
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fal fa-times"></i>
+                    </button>
+                    <div  class="cart_popup_img">
+                        <img id="ProductImage" src="" alt="menu" class="img-fluid w-100">
+                    </div>
+                    <div class="cart_popup_text">
+                        <a id="ProductName" class="title">Name</a>
+                       
+                        <h4 class="price" id="ProductPrice"></h4>
+
+                        @* Price *@
+                        <div class="details_size">
+                            <h5>select size</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="large"
+                                       >
+                                <label class="form-check-label" for="large">
+                                    large <span class="selectedPrice" id="ProductLPrice">10</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="medium" checked>
+                                <label class="form-check-label" for="medium">
+                                    medium <span class="selectedPrice" id="ProductMPrice">20</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="small">
+                                <label class="form-check-label" for="small">
+                                    small <span class="selectedPrice" id="ProductSPrice">30</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        @* drinks *@
+                        <div class="details_extra_item">
+                            <h5>select option <span>(optional)</span></h5>
+                            @foreach (Drink drink in Model.Drinks){
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="coca-cola">
+                                    <label class="form-check-label" for="coca-cola">
+                                        @drink.Name <span>+ $ @drink.Price</span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="details_quentity">
+                            <h5>select quentity</h5>
+                            <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
+                                <div class="quentity_btn">
+                                    <button class="btn btn-danger decrement"><i class="fal fa-minus"></i></button>
+                                      <input class="num" type="text" placeholder="1">  
+                                    <button class="btn btn-success incremenet"><i class="fal fa-plus"></i></button>
+                                </div>
+                                <h3 id="totalPrice"> $ 0 </h3>
+                            </div>
+                        </div>
+                        
+                        <ul class="details_button_area d-flex flex-wrap">
+                            <li id="AddToCart">
+                                <a id="orderElement" class="common_btn" onclick="addBenefit()" asp-action="Order">
+                                    <span class="icon"><img src="~/assets/images/cart_icon_1.png" alt=""></span>
+                                    add to cart
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<!-- CART POPUT END -->
+<!--==========================
+    MENU ITEM END
+===========================-->
+
+<!--==========================
+    APP DOWNLOAD START
+===========================-->
+
+<!--==========================
+    APP DOWNLOAD END
+===========================-->
+<!--==========================
+    CHEFS START
+===========================-->
+<section class="shefs pt_125 xs_pt_90">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 m-auto wow fadeInUp">
+                <div class="section_heading mb_25">
+                    <h2>Meet Our special Chefs </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.Chef)
+            {
+                <div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">
+                    <div class="single_chef">
+                        <a class="single_chef_img">
+                            <img src="~/assets/images/@item.Images" alt="Chef" class="img-fluid w-100">
+                            <span>@item.Position.PositionName</span>
+                        </a>
+                        <div class="single_chef_text">
+                            <a class="title">@item.Name</a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+           
+          
+          @*   <div class="col-12 text-center mt_60 wow fadeInUp">
+                <a class="common_btn" href="chefs.html">
+                    <span class="icon">
+                        <img src="~/assets/images/eye.png" alt="order" class="img-fluid w-100">
+                    </span>
+                    View All Chef
+                </a>
+            </div> *@
+        </div>
+    </div>
+</section>
+<!--==========================
+    CHEFS END
+===========================-->
+<!--==========================
+    TESTIMONIAL START
+===========================-->
+<section class="testimonial mt_140 xs_mt_100" style="background: url(../assets/images/testimonial_bg.jpg);">
+    <div class="testimonial_overlay pt_250 xs_pt_100">
+        <div class="container mt_20">
+            <div class="row">
+                <div class="col-md-9 wow fadeInUp">
+                    <div class="testimonial_content">
+                        <div class="row testi_slider">
+                            @foreach (Comment comment in Model.Comment)
+                            {
+                                <div class="col-12">
+                                    <div class="single_testimonial">
+                                     
+                                        <p class="description">
+                                          @comment.CommentDescription
+                                        </p>
+                                        <div class="single_testimonial_footer">
+                                            <div class="img">
+                                                <img src="~/assets/images/client_img_1.png" alt="clien"
+                                                     class="img-fluis w-100">
+                                            </div>
+                                            <h3>@comment.NameCustoms<span></span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                          @*   <div class="col-12">
+                                <div class="single_testimonial">
+                                    <p class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </p>
+                                    <p class="description">
+                                        "I love that solvency lets us manage everything in one
+                                        place. It's super helpful to be able to listen to voice samples, upload our
+                                        own lists, and find quality salespeople that can grow with our team."
+                                    </p>
+                                    <div class="single_testimonial_footer">
+                                        <div class="img">
+                                            <img src="~/assets/images/client_img_1.png" alt="clien"
+                                                 class="img-fluis w-100">
+                                        </div>
+                                        <h3>Indigo Violet <span>Co - Founder</span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="single_testimonial">
+                                    <p class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </p>
+                                    <p class="description">
+                                        "I love that solvency lets us manage everything in one
+                                        place. It's super helpful to be able to listen to voice samples, upload our
+                                        own lists, and find quality salespeople that can grow with our team."
+                                    </p>
+                                    <div class="single_testimonial_footer">
+                                        <div class="img">
+                                            <img src="~/assets/images/client_img_2.png" alt="client"
+                                                 class="img-fluis w-100">
+                                        </div>
+                                        <h3>jihan ahmed <span>Co - Founder</span></h3>
+                                    </div>
+                                </div>
+                            </div> *@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="testimonial_video">
+                        <a class="common_btn"asp-action="Add">
+                            <span class="icon">
+                                <img src="~/assets/images/eye.png" alt="order" class="img-fluid w-100">
+                            </span>
+                           Comment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    TESTIMONIAL END
+===========================-->
+<!--==========================
+    COUNTER START
+===========================-->
+<section class="counter_area">
+    <div class="counter_bg pt_30 pb_35">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">45</h2>
+                        <span>Dishes</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">68</h2>
+                        <span>Location</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">32</h2>
+                        <span>Chefs</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">120</h2>
+                        <span>Cities</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    const plus = document.querySelector(".incremenet");
+    const minus = document.querySelector(".decrement");
+    const num = document.querySelector(".num");
+    const orderElement = document.getElementById("orderElement");
+
+    let result =0;
+    let selectedPrice = 0;
+    let selectedDrink= 0;
+    let count = 1;
+    const radioInputs = document.querySelectorAll('input[type="radio"][name="flexRadioDefault"]');
+
+    // const aspAtribute = document.getElementById("orderElement");
+    // console.log(aspAtribute);
+    // document.getElementById("orderElement").setAttribute("asp-route-totalPrice", 10);
+
+    radioInputs.forEach(input => {
+        input.addEventListener('change', function () {
+         
+            selectedPrice = selectedPrice = document.getElementById("ProductMPrice").innerText;
+            
+            if (document.getElementById("large").checked) {
+                    selectedPrice = document.getElementById("ProductLPrice").innerText;
+                }
+                else if (document.getElementById("medium").checked) {
+                    selectedPrice = document.getElementById("ProductMPrice").innerText;
+                }
+                else if (document.getElementById("small").checked) {
+                    selectedPrice = document.getElementById("ProductSPrice").innerText;
+                }
+          
+                selectedPrice = selectedPrice.substring(4);
+                result = Number(selectedPrice) * Number(count);
+
+            $('#totalPrice').text('$ ' + result);
+        });
+        localStorage.setItem("totalPrice", result);
+
+        // var htmlContent1 = "";
+        // htmlContent1 += '<a id="orderElement" class="common_btn" asp-action="Order" asp-route-totalPrice="' + result + 
+        // '" > <span class="icon" > <img src="~/assets/images/cart_icon_1.png" > </span>  add to cart < /a>';
+        // $("#AddToCart").html(htmlContent1);
+        
+    });
+
+    let prices = 0;
+    let a = 1;
+    let productId = 0;
+
+    plus.addEventListener("click", () => {
+        a++;
+        a = (a < 10) ? "0" + a : a;
+        num.value = a;
+        count = a;
+        result = Number(selectedPrice) * Number(count);
+        $('#totalPrice').text('$ ' + result);
+    });
+
+    minus.addEventListener("click", () => {
+        if(a>1){
+            a--;
+            a = (a < 10) ? "0" + a : a;
+            num.value = a;
+            count = a;
+            result = Number(selectedPrice) * Number(count);
+            $('#totalPrice').text('$ ' + result);
+         }
+    });
+
+    function showDetail(cartId) {
+        productId = cartId;
+
+        $.ajax({
+            type: 'GET',
+            url: '/Home/Detail', 
+            data: { id: cartId },
+            success: function (data) {
+                $('#ProductName').text(data.productName);
+                $('#ProductPrice').text('$ ' + data.productMPrice);
+                $('#ProductMPrice').text('+ $ ' + data.productMPrice);
+                $('#ProductSPrice').text('+ $ ' + data.productSPrice);
+                $('#ProductLPrice').text('+ $ ' + data.productLPrice);
+                $('#totalPrice').text('$ ' + data.productMPrice);
+                 const productImage = '/assets/images/' + data.image;
+                document.getElementById("ProductImage").src = productImage;
+            },
+            error: function () {
+                alert('Məlumatlar əldə edilə bilmədi.');
+            }
+        });
+
+    }
+  
+    let categoryId = 0;
+
+    function changeMenu(catId){
+        $.ajax({
+            type: 'GET',
+            url: '/Home/GetProductByCategory',
+            data: { id: catId },
+            success: function (data2) {
+                var htmlContent = "";
+
+                $.each(data2, function (index, item) {
+                    htmlContent += '<div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">';
+                    htmlContent += '<div class="single_menu">';
+                    htmlContent += '<div class="single_menu_img">';
+                    htmlContent += '<img src="/assets/images/' + item.image + '" alt="menu" class="img-fluid w-100">';
+                    htmlContent += '<ul>';
+                    htmlContent += '<li><a href="#"><i class="far fa-eye"></i></a></li>';
+                    htmlContent += '<li><a href="#"><i class="far fa-heart"></i></a></li>';
+                    htmlContent += '</ul>';
+                    htmlContent += '</div>';
+                    htmlContent += '<div class="single_menu_text">';
+                    htmlContent += '<a class="title" href="menu_details.html">' + item.productName + '</a>';
+                    htmlContent += '<p class="descrption">' + item.productDescription + '</p>';
+                    htmlContent += '<div class="d-flex flex-wrap align-items-center">';
+                    htmlContent += '<a class="add_to_cart" data-bs-toggle="modal" data-bs-target="#cartModal" onclick="showDetail(' + item.id + ')">Add To Cart</a>';
+                    htmlContent += '<h3>$ ' + item.productMPrice + '</h3>';
+                    htmlContent += '</div>';
+                    htmlContent += '</div>';
+                    htmlContent += '</div>';
+                    htmlContent += '</div>';
+                });
+
+                $("#ProductByCategory").html(htmlContent);
+            },
+            error: function () {
+                alert('Məlumatlar əldə edilə bilmədi.');
+            }
+        });
+    }
+
+  function addBenefit(){
+        $.ajax({
+            type: 'POST',
+            url: '/Home/AddBenefit',
+            data: { amount: result },
+            success: function (data) {
+                console.log("okeydir");
+            },
+            error: function () {
+                alert('Məlumatlar əldə edilə bilmədi.');
+            }
+        });
+  }
+
+</script> 
+@* <script src="~/assets/js/main.js"></script> *@
+@* <script>
+
+    $(document).on("click", "#subBtn", function () {
+        $("#ErorrMes").empty()
+        $.ajax({
+            url: "/Home/Chekout/",
+            type: "get",
+            data: {
+                "email": $("#subBtn").prev().val()
+            },
+            success: function (res) {
+                $("#ErorrMes").append(res)
+
+            }
+        });
+    });
+</script> *@
